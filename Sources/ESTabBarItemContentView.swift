@@ -125,8 +125,20 @@ open class ESTabBarItemContentView: UIView {
         }
     }
     
+    open var lineImage: UIImage? {
+        didSet {
+            if selected { self.updateDisplay() }
+        }
+    }
+    
     open var imageView: UIImageView = {
         let imageView = UIImageView.init(frame: CGRect.zero)
+        imageView.backgroundColor = .clear
+        return imageView
+    }()
+    
+    var lineImageView: UIView = {
+        let imageView = UIView.init(frame: CGRect.zero)
         imageView.backgroundColor = .clear
         return imageView
     }()
@@ -190,6 +202,7 @@ open class ESTabBarItemContentView: UIView {
         
         addSubview(imageView)
         addSubview(titleLabel)
+        addSubview(lineImageView)
         
         titleLabel.textColor = textColor
         imageView.tintColor = iconColor
@@ -201,6 +214,9 @@ open class ESTabBarItemContentView: UIView {
     }
 
     open func updateDisplay() {
+        let lineColor = UIColor(red: 45/255, green: 43/255, blue: 112/255, alpha: 1)
+        lineImageView.backgroundColor = selected ? lineColor : .clear
+        
         imageView.image = (selected ? (selectedImage ?? image) : image)?.withRenderingMode(renderingMode)
         imageView.tintColor = selected ? highlightIconColor : iconColor
         titleLabel.textColor = selected ? highlightTextColor : textColor
@@ -214,6 +230,11 @@ open class ESTabBarItemContentView: UIView {
         imageView.isHidden = (imageView.image == nil)
         titleLabel.isHidden = (titleLabel.text == nil)
 
+        let lineHeight = CGFloat(5)
+        let lineWidth = CGFloat(35)
+        lineImageView.frame = CGRect.init(x: (w-lineWidth)/2, y: h - lineHeight, width: lineWidth, height: lineHeight)
+        
+        
         if self.itemContentMode == .alwaysTemplate {
             var s: CGFloat = 0.0 // image size
             var f: CGFloat = 0.0 // font

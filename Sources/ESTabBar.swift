@@ -158,6 +158,14 @@ open class ESTabBar: UITabBar {
         return b
     }
     
+    public func hideAllLine(isHidden: Bool) {
+        for item in self.items ?? [] {
+            if let item = item as? ESTabBarItem {
+                item.hideLine(isHidden: isHidden)
+            }
+        }
+    }
+    
 }
 
 internal extension ESTabBar /* Layout */ {
@@ -412,7 +420,7 @@ internal extension ESTabBar /* Actions */ {
             container.accessibilityTraits = item.accessibilityTraits
             
             if item == selectedItem {
-                container.accessibilityTraits = container.accessibilityTraits.union(.selected)
+//                container.accessibilityTraits = container.accessibilityTraits.union(.selected)
             }
             
             if let explicitLabel = item.accessibilityLabel {

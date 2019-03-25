@@ -104,4 +104,13 @@ open class ESTabBarItem: UITabBarItem {
         self.tag = tag
     }
     
+    open func hideLine(isHidden: Bool) {
+        if isHidden {
+           self.contentView?.hideLine()
+        } else {
+           self.contentView?.setupLine()
+        }
+        
+    }
+    
 }

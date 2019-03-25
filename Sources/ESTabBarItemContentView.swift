@@ -137,11 +137,13 @@ open class ESTabBarItemContentView: UIView {
         return imageView
     }()
     
-    var lineImageView: UIView = {
+    open var lineImageView: UIView = {
         let imageView = UIView.init(frame: CGRect.zero)
         imageView.backgroundColor = .clear
         return imageView
     }()
+    
+    let lineColor = UIColor(red: 45/255, green: 43/255, blue: 112/255, alpha: 1)
     
     open var titleLabel: UILabel = {
         let titleLabel = UILabel.init(frame: CGRect.zero)
@@ -214,13 +216,20 @@ open class ESTabBarItemContentView: UIView {
     }
 
     open func updateDisplay() {
-        let lineColor = UIColor(red: 45/255, green: 43/255, blue: 112/255, alpha: 1)
-        lineImageView.backgroundColor = selected ? lineColor : .clear
+        setupLine()
         
         imageView.image = (selected ? (selectedImage ?? image) : image)?.withRenderingMode(renderingMode)
         imageView.tintColor = selected ? highlightIconColor : iconColor
         titleLabel.textColor = selected ? highlightTextColor : textColor
         backgroundColor = selected ? highlightBackdropColor : backdropColor
+    }
+    
+    func hideLine() {
+        lineImageView.backgroundColor =  .clear
+    }
+    
+    func setupLine() {
+        lineImageView.backgroundColor = selected ? lineColor : .clear
     }
     
     open func updateLayout() {
